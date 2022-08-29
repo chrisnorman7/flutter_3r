@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'src/json/directory_volunteer.dart';
+import 'src/json/rota_shifts.dart';
 import 'src/json/three_rings_directory.dart';
 import 'src/json/three_rings_news.dart';
 import 'three_rings_context.dart';
@@ -65,9 +66,11 @@ final threeRingsContextProvider = FutureProvider<ThreeRingsContext>(
   (final ref) async {
     final directory = await ref.watch(directoryProvider.future);
     final news = await ref.watch(newsProvider.future);
+    final shifts = await ref.watch(shiftsProvider.future);
     return ThreeRingsContext(
       directory: directory,
       news: news,
+      shifts: shifts,
     );
   },
 );
@@ -79,5 +82,15 @@ final newsProvider = FutureProvider<ThreeRingsNews>(
     final response = await dio.get<Map<String, dynamic>>('news.json');
     final json = response.data!;
     return ThreeRingsNews.fromJson(json);
+  },
+);
+
+/// Provide all the shifts for this organisation.
+final shiftsProvider = FutureProvider<RotaShifts>(
+  (final ref) async {
+    final dio = ref.watch(dioProvider);
+    final response = await dio.get<Map<String, dynamic>>('shift.json');
+    final json = response.data!;
+    return RotaShifts.fromJson(json);
   },
 );

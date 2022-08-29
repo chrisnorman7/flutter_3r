@@ -1,4 +1,5 @@
 import 'screens/main_screen.dart';
+import 'src/json/rota_shifts.dart';
 import 'src/json/three_rings_directory.dart';
 import 'src/json/three_rings_news.dart';
 
@@ -8,6 +9,7 @@ class ThreeRingsContext {
   const ThreeRingsContext({
     required this.directory,
     required this.news,
+    required this.shifts,
   });
 
   /// The directory to use.
@@ -15,4 +17,7 @@ class ThreeRingsContext {
 
   /// The news from the organisation.
   final ThreeRingsNews news;
+
+  /// The shifts that have been retrieved.
+  final RotaShifts shifts;
 }

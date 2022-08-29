@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:backstreets_widgets/screens.dart';
+import 'package:backstreets_widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,7 +38,8 @@ class MainScreenState extends ConsumerState<MainScreen> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(seconds: 30), (final timer) {
+    timer = Timer.periodic(const Duration(minutes: 1), (final timer) {
+      ref.refresh(shiftsProvider);
       if (mounted) {
         setState(() {});
       }
@@ -63,9 +65,11 @@ class MainScreenState extends ConsumerState<MainScreen> {
     final newsItems = news.items;
     final newsItem = newsItems[random.nextInt(newsItems.length)];
     final volunteers = directory.volunteers;
+    final shifts = ctx.shifts;
+    setClipboardText(shifts.toString());
     return Column(
       children: [
-        const Text('People In Building'),
+        const Text('Shifts'),
         Expanded(
           child: CustomGrid(
             itemCount: volunteers.length,
