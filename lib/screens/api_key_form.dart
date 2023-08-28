@@ -43,7 +43,7 @@ class ApiKeyFormState extends ConsumerState<ApiKeyForm> {
             LogicalKeyboardKey.enter,
             control: useControlKey,
             meta: useMetaKey,
-          ): saveApiKey
+          ): saveApiKey,
         },
         child: SimpleScaffold(
           title: 'Enter API Key',
@@ -65,7 +65,7 @@ class ApiKeyFormState extends ConsumerState<ApiKeyForm> {
                     }
                     return null;
                   },
-                )
+                ),
               ],
             ),
           ),
@@ -82,7 +82,7 @@ class ApiKeyFormState extends ConsumerState<ApiKeyForm> {
     if (formKey.currentState?.validate() ?? false) {
       final apiKey = controller.text;
       keyFile.writeAsStringSync(apiKey);
-      ref.refresh(apiKeyProvider);
+      ref.invalidate(apiKeyProvider);
     }
   }
 }

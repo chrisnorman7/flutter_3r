@@ -40,10 +40,10 @@ class ThreeRingsErrorScreen extends ConsumerWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             final e = error;
-            if (e is DioError && e.response?.statusCode == 403) {
+            if (e is DioException && e.response?.statusCode == 403) {
               keyFile.deleteSync();
             }
-            ref.refresh(apiKeyProvider);
+            ref.invalidate(apiKeyProvider);
           },
           tooltip: 'OK',
           child: const Icon(

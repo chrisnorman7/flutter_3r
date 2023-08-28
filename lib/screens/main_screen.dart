@@ -39,7 +39,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(minutes: 1), (final timer) {
-      ref.refresh(shiftsProvider);
+      ref.invalidate(shiftsProvider);
       if (mounted) {
         setState(() {});
       }
@@ -51,8 +51,10 @@ class MainScreenState extends ConsumerState<MainScreen> {
   Widget build(final BuildContext context) {
     final provider = ref.watch(threeRingsContextProvider);
     return provider.when(
-      data: (final data) =>
-          SimpleScaffold(title: 'Three Rings', body: getBody(data)),
+      data: (final data) => SimpleScaffold(
+        title: 'Three Rings',
+        body: getBody(data),
+      ),
       error: ThreeRingsErrorScreen.withPositional,
       loading: LoadingScreen.new,
     );
@@ -98,7 +100,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
               launchUrl(Uri.parse(url));
             }
           },
-        )
+        ),
       ],
     );
   }
